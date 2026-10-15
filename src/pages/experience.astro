@@ -1,37 +1,69 @@
 ---
 import Base from '../layouts/Base.astro';
 
-// TODO(Dayo): fill in the exact dates for each entry. They are left blank on purpose.
+// Sources: Dayo's resume and LinkedIn profile.
 const entries = [
   {
     role: 'Software Engineering Trainee',
-    org: 'Semicolon Africa',
+    org: 'Semicolon Africa, Lagos',
     type: 'Training programme · Completed',
-    dates: 'TODO: dates',
+    dates: 'Sep 2025 – Sep 2026',
     points: [
-      'Completed an intensive software engineering programme with a backend focus: Java and Spring Boot, Python and Django REST Framework, Go, and JavaScript/Node.js.',
-      'Built layered REST APIs with PostgreSQL and MongoDB, JWT authentication, role-based access control and integration tests.',
+      'Built backend systems in Java (Spring Boot), Python (Django REST Framework), Go (Gin) and JavaScript (Node.js, Express), including REST APIs backed by PostgreSQL and MongoDB.',
+      'Led a team of peers to deliver a visitor management system to MVP within a three-week sprint.',
+      'Integrated Paystack payments into a Spring Boot service, with webhook-driven payment confirmation and signature verification, and deployed it on AWS EC2.',
+      'Took part in peer code reviews and gave technical presentations to the cohort, including one on Spring Security.',
     ],
   },
   {
-    role: 'Lead Audio-Visual Systems Engineer',
-    org: 'Live events and installations',
-    type: 'About 7 years',
-    dates: 'TODO: dates',
+    role: 'Audio Production Lead',
+    org: 'ShowGear Limited · Dunamis International Gospel Centre, Abuja',
+    type: '',
+    dates: 'May 2023 – Aug 2025',
     points: [
-      'Designed and ran sound, video and control systems for large live events and permanent installations, where a failure mid-show is not an option.',
-      'Led teams of up to 15 people, including running the sound department at the Glory Dome, Abuja.',
-      'Planned projects end to end, from requirements and system design to scheduling crews, setting up on site and running the show live.',
-      'Kept systems running under live pressure, with fallback plans ready before doors opened.',
+      'Ran the sound department at the Glory Dome, a 100,000+ capacity venue, leading a team of up to 15 people.',
+      'Oversaw deployment and maintenance of the audio, video and lighting systems, integrating live sound with broadcast streaming and in-venue AV.',
+      'Managed live broadcast audio for online audiences across multiple streaming platforms.',
+      'Trained interns, volunteers and client teams on system operation and troubleshooting.',
     ],
   },
   {
-    role: 'Audio-Visual Systems Engineer',
+    role: 'Audio Engineer',
+    org: 'ALTRASAV Limited, Abuja',
+    type: 'Contract',
+    dates: 'Jun 2025 – Jul 2025',
+    points: [
+      'Led installation and integration of digital sound systems for the House of Assembly and the Court of Appeal, Abuja.',
+      'Implemented Dante audio networking across multiple sources and devices, and supervised the engineering team from planning to handover.',
+    ],
+  },
+  {
+    role: 'Audio-Visual Engineer',
     org: 'ProAV Sistems',
     type: 'Freelance',
-    dates: 'TODO: dates',
+    dates: 'Jan 2018 – present',
     points: [
-      'Freelance audio-visual systems engineering for events and installations.',
+      'Designed and deployed AV systems for live events, corporate installations and studios across Lagos.',
+      'Delivered installations for high-profile clients, including the Federal House of Representatives, handling site surveys and technical sign-off with senior stakeholders.',
+    ],
+  },
+  {
+    role: 'Mixing & Mastering Engineer and Studio Manager',
+    org: 'Sophia Studios',
+    type: '',
+    dates: 'Jan 2019 – Dec 2022',
+    points: [
+      'Ran day-to-day studio operations: scheduling, client relations and technical readiness for every session.',
+      'Recorded, mixed and mastered music projects, and trained interns on studio workflow.',
+    ],
+  },
+  {
+    role: 'Project Manager, Audio Post-Production',
+    org: 'JBI Studios & Andovar',
+    type: '',
+    dates: '2020 – 2021',
+    points: [
+      'Managed voice-over localisation projects for international clients and ran quality control on deliverables against strict deadlines.',
     ],
   },
 ];
@@ -44,8 +76,8 @@ const entries = [
   <div class="prose">
     <h1>Experience</h1>
     <p class="muted">
-      My software engineering training, plus the seven years of systems engineering and team
-      leadership that came before it.
+      My software engineering training, plus the audio-visual systems engineering career
+      (2016–2025) and team leadership that came before it.
     </p>
 
     <ol class="timeline">
@@ -54,7 +86,8 @@ const entries = [
           <li>
             <h2>{e.role}</h2>
             <p class="org">
-              <strong>{e.org}</strong> · <span>{e.type}</span>
+              <strong>{e.org}</strong>
+              {e.type && <span> · {e.type}</span>}
             </p>
             <p class="dates muted">{e.dates}</p>
             <ul>

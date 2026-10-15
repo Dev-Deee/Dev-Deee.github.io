@@ -1,0 +1,124 @@
+---
+import Base from '../layouts/Base.astro';
+
+// TODO(Dayo): fill in the exact dates for each entry. They are left blank on purpose.
+const entries = [
+  {
+    role: 'Software Engineering Trainee',
+    org: 'Semicolon Africa',
+    type: 'Training programme · Completed',
+    dates: 'TODO: dates',
+    points: [
+      'Completed an intensive software engineering programme with a backend focus: Java and Spring Boot, Python and Django REST Framework, Go, and JavaScript/Node.js.',
+      'Built layered REST APIs with PostgreSQL and MongoDB, JWT authentication, role-based access control and integration tests.',
+    ],
+  },
+  {
+    role: 'Lead Audio-Visual Systems Engineer',
+    org: 'Live events and installations',
+    type: 'About 7 years',
+    dates: 'TODO: dates',
+    points: [
+      'Designed and ran sound, video and control systems for large live events and permanent installations, where a failure mid-show is not an option.',
+      'Led teams of up to 15 people, including running the sound department at the Glory Dome, Abuja.',
+      'Planned projects end to end, from requirements and system design to scheduling crews, setting up on site and running the show live.',
+      'Kept systems running under live pressure, with fallback plans ready before doors opened.',
+    ],
+  },
+  {
+    role: 'Audio-Visual Systems Engineer',
+    org: 'ProAV Sistems',
+    type: 'Freelance',
+    dates: 'TODO: dates',
+    points: [
+      'Freelance audio-visual systems engineering for events and installations.',
+    ],
+  },
+];
+---
+
+<Base
+  title="Experience"
+  description="Software engineering training at Semicolon Africa and seven years leading live audio-visual systems engineering."
+>
+  <div class="prose">
+    <h1>Experience</h1>
+    <p class="muted">
+      My software engineering training, plus the seven years of systems engineering and team
+      leadership that came before it.
+    </p>
+
+    <ol class="timeline">
+      {
+        entries.map((e) => (
+          <li>
+            <h2>{e.role}</h2>
+            <p class="org">
+              <strong>{e.org}</strong> · <span>{e.type}</span>
+            </p>
+            <p class="dates muted">{e.dates}</p>
+            <ul>
+              {e.points.map((p) => (
+                <li>{p}</li>
+              ))}
+            </ul>
+          </li>
+        ))
+      }
+    </ol>
+
+    <h2 class="skills-heading">What carries over</h2>
+    <ul>
+      <li><strong>Running systems that can't fail.</strong> I plan for redundancy, monitor closely and stay calm when something breaks.</li>
+      <li><strong>Leading people.</strong> I've briefed, delegated to and coordinated teams of up to 15 on tight schedules.</li>
+      <li><strong>Managing projects.</strong> I've taken work from a client brief through design and delivery to sign-off.</li>
+      <li><strong>Systems thinking.</strong> Signal flow and service architecture are both about how components connect and fail.</li>
+    </ul>
+  </div>
+</Base>
+
+<style>
+  .timeline {
+    list-style: none;
+    padding: 0;
+    margin: 2rem 0 0;
+    border-left: 2px solid var(--border);
+  }
+
+  .timeline > li {
+    position: relative;
+    margin: 0 0 2.25rem;
+    padding-left: 1.5rem;
+  }
+
+  .timeline > li::before {
+    content: '';
+    position: absolute;
+    left: -7px;
+    top: 0.45rem;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: var(--accent);
+    border: 2px solid var(--bg);
+  }
+
+  .timeline h2 {
+    margin: 0 0 0.2rem;
+    font-size: 1.2rem;
+  }
+
+  .org {
+    margin: 0;
+  }
+
+  .dates {
+    margin: 0 0 0.6rem;
+    font-size: 0.9rem;
+    font-family: var(--mono);
+  }
+
+  .skills-heading {
+    margin-top: 1rem;
+  }
+</style>

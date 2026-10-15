@@ -1,0 +1,246 @@
+---
+import '../styles/global.css';
+import Icon from '../components/Icon.astro';
+import { SITE } from '../site.config';
+
+interface Props {
+  title?: string;
+  description?: string;
+  ogType?: 'website' | 'article';
+}
+
+const { title, description = SITE.description, ogType = 'website' } = Astro.props;
+const pageTitle = title ? `${title} | ${SITE.name}` : SITE.title;
+const canonical = new URL(Astro.url.pathname, Astro.site);
+const ogImage = new URL(SITE.ogImage, Astro.site);
+const path = Astro.url.pathname.replace(/\/$/, '') || '/';
+
+const nav = [
+  { href: '/', label: 'Projects' },
+  { href: '/about', label: 'About' },
+  { href: '/experience', label: 'Experience' },
+  { href: '/resume', label: 'Resume' },
+];
+const isCurrent = (href: string) =>
+  href === '/' ? path === '/' || path.startsWith('/projects') : path.startsWith(href);
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{pageTitle}</title>
+    <meta name="description" content={description} />
+    <meta name="author" content={SITE.name} />
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+    <meta name="theme-color" content="#fbfaf7" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#111315" media="(prefers-color-scheme: dark)" />
+
+    <meta property="og:type" content={ogType} />
+    <meta property="og:site_name" content={SITE.name} />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content={`${SITE.name}, backend engineer`} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content={SITE.twitterHandle} />
+    <meta name="twitter:title" content={pageTitle} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+    <slot name="head" />
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <header class="site-header">
+      <div class="wrap bar">
+        <a class="brand" href="/" aria-label={`${SITE.name}, home`}>
+          <span class="brand-mark" aria-hidden="true">OA</span>
+          <span class="brand-name">{SITE.shortName}</span>
+        </a>
+        <nav aria-label="Main">
+          <ul>
+            {
+              nav.map((item) => (
+                <li>
+                  <a href={item.href} aria-current={isCurrent(item.href) ? 'page' : undefined}>
+                    {item.label}
+                  </a>
+                </li>
+              ))
+            }
+            <li><a class="contact" href={`mailto:${SITE.email}`}>Contact</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <main id="main" class="wrap">
+      <slot />
+    </main>
+
+    <footer class="site-footer">
+      <div class="wrap foot">
+        <p class="muted">© {new Date().getFullYear()} {SITE.name} · {SITE.location}</p>
+        <ul class="social" aria-label="Profiles">
+          <li>
+            <a href={SITE.github} rel="me noopener" aria-label="GitHub"><Icon name="github" /></a>
+          </li>
+          <li>
+            <a href={SITE.linkedin} rel="me noopener" aria-label="LinkedIn"><Icon name="linkedin" /></a>
+          </li>
+          <li>
+            <a href={SITE.twitter} rel="me noopener" aria-label={`X (Twitter) ${SITE.twitterHandle}`}
+              ><Icon name="x" /></a
+            >
+          </li>
+          <li>
+            <a href={`mailto:${SITE.email}`} aria-label="Email"><Icon name="mail" /></a>
+          </li>
+        </ul>
+      </div>
+    </footer>
+  </body>
+</html>
+
+<style>
+  .site-header {
+    border-bottom: 1px solid var(--border);
+  }
+
+  .bar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem 1.5rem;
+    padding-top: 0.9rem;
+    padding-bottom: 0.9rem;
+  }
+
+  .brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    color: var(--text);
+    text-decoration: none;
+    font-weight: 700;
+    min-height: 44px;
+  }
+
+  .brand-mark {
+    display: inline-grid;
+    place-items: center;
+    width: 2.1rem;
+    height: 2.1rem;
+    border-radius: 8px;
+    background: var(--accent);
+    color: var(--bg);
+    font-size: 0.85rem;
+    letter-spacing: 0.02em;
+  }
+
+  nav ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0 0.25rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  nav li {
+    margin: 0;
+  }
+
+  nav a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    padding: 0 0.6rem;
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 0.97rem;
+    border-radius: 6px;
+  }
+
+  nav a:hover {
+    color: var(--text);
+  }
+
+  nav a[aria-current='page'] {
+    color: var(--text);
+    font-weight: 600;
+    text-decoration: underline;
+    text-decoration-color: var(--accent);
+    text-decoration-thickness: 2px;
+    text-underline-offset: 0.45em;
+  }
+
+  nav a.contact {
+    color: var(--accent);
+    font-weight: 600;
+  }
+
+  @media (max-width: 520px) {
+    nav ul {
+      margin-left: -0.6rem;
+    }
+  }
+
+  main {
+    padding-top: 2.5rem;
+    padding-bottom: 4rem;
+    min-height: 70vh;
+  }
+
+  .site-footer {
+    border-top: 1px solid var(--border);
+  }
+
+  .foot {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem 1rem;
+    padding-top: 1.25rem;
+    padding-bottom: 1.25rem;
+  }
+
+  .foot p {
+    margin: 0;
+    font-size: 0.92rem;
+  }
+
+  .social {
+    display: flex;
+    gap: 0.25rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .social li {
+    margin: 0;
+  }
+
+  .social a {
+    display: inline-grid;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    border-radius: 8px;
+    color: var(--muted);
+  }
+
+  .social a:hover {
+    color: var(--accent);
+    background: var(--accent-soft);
+  }
+</style>

@@ -1,0 +1,43 @@
+---
+import Base from '../layouts/Base.astro';
+---
+
+<Base title="Resume" description="Download or view the resume of Oladayo Ajomole, backend engineer.">
+  <h1>Resume</h1>
+  <p class="actions">
+    <a class="button" href="/resume.pdf" download="Oladayo-Ajomole-Resume.pdf">Download PDF</a>
+    <a class="button secondary" href="/resume.pdf" rel="noopener">Open in a new tab</a>
+  </p>
+
+  <object class="pdf" data="/resume.pdf" type="application/pdf" aria-label="Resume (PDF)">
+    <p>
+      Your browser can't display PDFs inline.
+      <a href="/resume.pdf">Download the resume</a> instead.
+    </p>
+  </object>
+</Base>
+
+<style>
+  .actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    margin: 1rem 0 1.5rem;
+  }
+
+  .pdf {
+    display: block;
+    width: 100%;
+    height: min(85vh, 1100px);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--surface);
+  }
+
+  @media (max-width: 640px) {
+    /* Mobile browsers rarely render inline PDFs well, so rely on the buttons. */
+    .pdf {
+      height: 70vh;
+    }
+  }
+</style>

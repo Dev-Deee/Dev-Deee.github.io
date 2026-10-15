@@ -1,0 +1,85 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+
+const projects = (await getCollection('projects', ({ data }) => !data.draft)).sort(
+  (a, b) => a.data.order - b.data.order || b.data.year - a.data.year,
+);
+const featured = projects.filter((p) => p.data.featured);
+const more = projects.filter((p) => !p.data.featured);
+---
+
+<Base>
+  <section class="intro" aria-labelledby="intro-heading">
+    <h1 id="intro-heading">Oladayo Ajomole</h1>
+    <p class="lede">
+      Backend engineer in Lagos. I build APIs and distributed services, mostly in
+      <strong>Java/Spring Boot</strong>, and also in <strong>Go</strong>, <strong>Python</strong>
+      and <strong>Node.js</strong>. I'm most interested in fintech, healthtech and AI-adjacent
+      products.
+    </p>
+  </section>
+
+  <section aria-labelledby="featured-heading">
+    <h2 id="featured-heading">Featured projects</h2>
+    <ul class="grid" role="list">
+      {
+        featured.map((project) => (
+          <li>
+            <ProjectCard project={project} />
+          </li>
+        ))
+      }
+    </ul>
+  </section>
+
+  {
+    more.length > 0 && (
+      <section aria-labelledby="more-heading">
+        <h2 id="more-heading">More projects</h2>
+        <ul class="grid small" role="list">
+          {more.map((project) => (
+            <li>
+              <ProjectCard project={project} compact />
+            </li>
+          ))}
+        </ul>
+      </section>
+    )
+  }
+</Base>
+
+<style>
+  .intro {
+    max-width: 44rem;
+    margin-bottom: 1rem;
+  }
+
+  .lede {
+    font-size: 1.15rem;
+    color: var(--muted);
+  }
+
+  .lede strong {
+    color: var(--text);
+    font-weight: 600;
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 18.5rem), 1fr));
+    gap: 1rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .grid li {
+    margin: 0;
+  }
+
+  .grid.small {
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 15rem), 1fr));
+  }
+</style>

@@ -1,0 +1,60 @@
+---
+import Base from '../layouts/Base.astro';
+import { SITE } from '../site.config';
+---
+
+<Base
+  title="About"
+  description="From leading live audio-visual systems to building backend services: how Oladayo Ajomole came to software engineering."
+>
+  <div class="prose">
+    <h1>About</h1>
+
+    <p>
+      Before software, I spent seven years as a Lead Audio-Visual Systems Engineer. I designed and ran
+      sound, video and control systems for large live events and installations, where nothing is
+      allowed to fail mid-show. The largest team I led was 15 people, running the sound department at
+      the Glory Dome in Abuja.
+    </p>
+
+    <p>
+      Today I build the systems behind the screen instead. I trained in Software Engineering at
+      Semicolon Africa, and I now build backend services in Java/Spring Boot, Go and Python. I care
+      most about fintech, healthtech and AI-adjacent products. In those fields, reliability matters as
+      much as it did at a live show.
+    </p>
+
+    <h2>How I work</h2>
+    <ul>
+      <li>
+        <strong>Design for failure first.</strong> Live production taught me to ask what happens when
+        a component drops out. In code that means outbox tables, retries with backoff, and explicit
+        state machines rather than hopeful happy paths.
+      </li>
+      <li>
+        <strong>Keep the boundaries clear.</strong> Controllers handle HTTP, services hold the rules,
+        and repositories talk to the database. Clear boundaries make code easier to test and easier
+        to hand over.
+      </li>
+      <li>
+        <strong>Pick the tool for the job.</strong> I'm strongest in Java/Spring Boot, and I reach for
+        Go when I want a small, concurrent binary, or for Python/Django when the domain is
+        data-shaped.
+      </li>
+    </ul>
+
+    <h2>Education</h2>
+    <ul>
+      <li>Software Engineering programme, Semicolon Africa</li>
+      <li>Entrepreneurship, Henley Business School (2026)</li>
+      <li>B.Sc. Political Science, Obafemi Awolowo University</li>
+      <li>National Youth Service Corps (NYSC), 2017</li>
+    </ul>
+
+    <h2>Get in touch</h2>
+    <p>
+      I'm open to backend engineering roles. The quickest way to reach me is by
+      <a href={`mailto:${SITE.email}`}>email</a> or on <a href={SITE.linkedin} rel="noopener">LinkedIn</a>.
+    </p>
+  </div>
+</Base>

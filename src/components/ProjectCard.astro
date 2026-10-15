@@ -1,0 +1,117 @@
+---
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  project: CollectionEntry<'projects'>;
+  compact?: boolean;
+}
+
+const { project, compact = false } = Astro.props;
+const { title, summary, year, language, tags } = project.data;
+const href = `/projects/${project.id}`;
+---
+
+<article class:list={['card', { compact }]}>
+  <div class="meta">
+    <span class="lang" data-lang={language}>{language}</span>
+    <span class="muted">{year}</span>
+  </div>
+  <h3><a href={href}>{title}</a></h3>
+  <p>{summary}</p>
+  {
+    tags.length > 0 && (
+      <ul class="tags" aria-label="Technologies">
+        {tags.map((tag) => (
+          <li>{tag}</li>
+        ))}
+      </ul>
+    )
+  }
+</article>
+
+<style>
+  .card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    height: 100%;
+    padding: 1.25rem;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    transition:
+      border-color 0.15s ease,
+      transform 0.15s ease;
+  }
+
+  .card:hover,
+  .card:focus-within {
+    border-color: var(--accent);
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .card:hover {
+      transform: translateY(-2px);
+    }
+  }
+
+  .meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.85rem;
+  }
+
+  .lang {
+    font-family: var(--mono);
+    font-weight: 600;
+    font-size: 0.78rem;
+    padding: 0.15rem 0.5rem;
+    border-radius: 6px;
+    background: var(--accent-soft);
+    color: var(--text);
+  }
+
+  h3 {
+    margin: 0;
+    font-size: 1.15rem;
+  }
+
+  h3 a {
+    color: var(--text);
+    text-decoration: none;
+  }
+
+  /* Make the whole card clickable through the title link. */
+  h3 a::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: var(--radius);
+  }
+
+  h3 a:focus-visible {
+    outline: none;
+  }
+
+  h3 a:focus-visible::after {
+    outline: 3px solid var(--focus);
+    outline-offset: 2px;
+  }
+
+  p {
+    margin: 0;
+    color: var(--muted);
+    font-size: 0.97rem;
+    flex-grow: 1;
+  }
+
+  .compact {
+    padding: 1rem 1.1rem;
+  }
+
+  .compact h3 {
+    font-size: 1.05rem;
+  }
+</style>
